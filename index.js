@@ -3,9 +3,34 @@ const window_width = window.innerWidth;
 console.log(window_width, break_point);
 const contact = document.getElementById('contact');
 const fullList = document.getElementById('full-list');
-
 const fullList2 = document.getElementById('full-list-2');
 
+// Mobile Sidebar Elements
+const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+const mobileSidebar = document.getElementById('mobile-sidebar');
+const closeSidebar = document.getElementById('close-sidebar');
+const sidebarOverlay = document.getElementById('sidebar-overlay');
+const contactMobile = document.getElementById('contact-mobile');
+const fullListMobile = document.getElementById('full-list-mobile');
+
+// Open Sidebar
+mobileMenuBtn.addEventListener('click', () => {
+    mobileSidebar.classList.add('open');
+    sidebarOverlay.classList.add('active');
+    document.body.style.overflow = 'hidden'; // Prevent scrolling
+});
+
+// Close Sidebar
+const closeSidebarFunc = () => {
+    mobileSidebar.classList.remove('open');
+    sidebarOverlay.classList.remove('active');
+    document.body.style.overflow = 'auto'; // Enable scrolling
+};
+
+closeSidebar.addEventListener('click', closeSidebarFunc);
+sidebarOverlay.addEventListener('click', closeSidebarFunc);
+
+// Desktop Contact
 contact.addEventListener('click', () => {
     window.scrollTo({
         top: document.body.scrollHeight,
@@ -13,6 +38,18 @@ contact.addEventListener('click', () => {
     });
 });
 
+// Mobile Contact
+contactMobile.addEventListener('click', () => {
+    closeSidebarFunc();
+    setTimeout(() => {
+        window.scrollTo({
+            top: document.body.scrollHeight,
+            behavior: 'smooth'
+        });
+    }, 300);
+});
+
+// Desktop Full List
 fullList.addEventListener('click', () => {
     const scrolling = window_width > break_point ? 850 : 1490;
     window.scrollTo({
@@ -29,6 +66,19 @@ fullList2.addEventListener('click', () => {
     });
 });
 
+// Mobile Full List
+fullListMobile.addEventListener('click', () => {
+    closeSidebarFunc();
+    setTimeout(() => {
+        const scrolling = window_width > break_point ? 850 : 1490;
+        window.scrollTo({
+            top: scrolling,
+            behavior: 'smooth'
+        });
+    }, 300);
+});
+
+// Desktop Special Links
 const specials = document.querySelectorAll('.special');
 specials.forEach(special => {
     special.addEventListener('click', () => {
@@ -37,6 +87,21 @@ specials.forEach(special => {
             top: scrolling,
             behavior: 'smooth'
         });
+    });
+});
+
+// Mobile Special Links
+const specialsMobile = document.querySelectorAll('.special-mobile');
+specialsMobile.forEach(special => {
+    special.addEventListener('click', () => {
+        closeSidebarFunc();
+        setTimeout(() => {
+            const scrolling = window_width > break_point ? 450 : 450;
+            window.scrollTo({
+                top: scrolling,
+                behavior: 'smooth'
+            });
+        }, 300);
     });
 });
 
@@ -56,6 +121,7 @@ sellingBtn.forEach(element => {
         window.open('https://sedo.com/search/?showportfolio=c67aa84ed5e26d9853476fb49144413aa5dfed49s', '_blank');
     });
 });
+
 const previewBtn = document.getElementById('display-landing-page');
 
 // Create modal HTML
